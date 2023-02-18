@@ -24,6 +24,10 @@ const routes = [
                 component: ()=> import('./pages/patients/index.vue')
             },
             {
+                path: '/patients/create',
+                component: ()=> import('./pages/patients/create.vue')
+            },
+            {
                 path: '/templates',
                 component: ()=> import('./pages/templates/index.vue')
             },

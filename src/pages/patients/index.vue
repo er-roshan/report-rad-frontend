@@ -1,6 +1,6 @@
 <template>
     <div class="py-6">
-        <MainHeader title="Patients" url="/patients" />
+        <MainHeader title="Patients" url="/patients/create" />
         <div class="px-4 sm:px-6 md:px-0">
             <!-- Replace with your content -->
             <div class="py-4">
