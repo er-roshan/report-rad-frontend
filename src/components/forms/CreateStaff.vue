@@ -4,38 +4,38 @@
       <div>
         <div class="flex justify-between">
           <h2 class="text-2xl font-medium leading-6 text-gray-900">Create Staff</h2>
-          <button>Cancel</button>
+          <RouterLink to="/staffs" class="global-btn danger-btn">Cancel</RouterLink>
         </div>
         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
           <div class="sm:col-span-3">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
+            <label for="first-name" class="report-label">First name</label>
             <div class="mt-1">
               <input type="text" name="first-name" id="first-name" autocomplete="given-name"
-                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                class="report-input" />
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
+            <label for="last-name" class="report-label">Last name</label>
             <div class="mt-1">
               <input type="text" name="last-name" id="last-name" autocomplete="family-name"
-                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                class="report-input" />
             </div>
           </div>
 
           <div class="sm:col-span-4">
-            <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+            <label for="email" class="report-label">Email address</label>
             <div class="mt-1">
               <input id="email" name="email" type="email" autocomplete="email"
-                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                class="report-input" />
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+            <label for="country" class="report-label">Country</label>
             <div class="mt-1">
               <select id="country" name="country" autocomplete="country-name"
-                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                class="report-input">
                 <option>United States</option>
                 <option>Canada</option>
                 <option>Mexico</option>
@@ -44,34 +44,34 @@
           </div>
 
           <div class="sm:col-span-6">
-            <label for="street-address" class="block text-sm font-medium text-gray-700">Street address</label>
+            <label for="street-address" class="report-label">Street address</label>
             <div class="mt-1">
               <input type="text" name="street-address" id="street-address" autocomplete="street-address"
-                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                class="report-input" />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+            <label for="city" class="report-label">City</label>
             <div class="mt-1">
               <input type="text" name="city" id="city" autocomplete="address-level2"
-                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                class="report-input" />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="region" class="block text-sm font-medium text-gray-700">State / Province</label>
+            <label for="region" class="report-label">State / Province</label>
             <div class="mt-1">
               <input type="text" name="region" id="region" autocomplete="address-level1"
-                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                class="report-input" />
             </div>
           </div>
 
           <div class="sm:col-span-2">
-            <label for="postal-code" class="block text-sm font-medium text-gray-700">ZIP / Postal code</label>
+            <label for="postal-code" class="report-label">ZIP / Postal code</label>
             <div class="mt-1">
               <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code"
-                class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+                class="report-input" />
             </div>
           </div>
         </div>
@@ -127,17 +127,17 @@
               <div class="flex items-center">
                 <input id="push-everything" name="push-notifications" type="radio"
                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label for="push-everything" class="ml-3 block text-sm font-medium text-gray-700">Everything</label>
+                <label for="push-everything" class="ml-3 report-label">Everything</label>
               </div>
               <div class="flex items-center">
                 <input id="push-email" name="push-notifications" type="radio"
                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label for="push-email" class="ml-3 block text-sm font-medium text-gray-700">Same as email</label>
+                <label for="push-email" class="ml-3 report-label">Same as email</label>
               </div>
               <div class="flex items-center">
                 <input id="push-nothing" name="push-notifications" type="radio"
                   class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label for="push-nothing" class="ml-3 block text-sm font-medium text-gray-700">No push
+                <label for="push-nothing" class="ml-3 report-label">No push
                   notifications</label>
               </div>
             </div>
