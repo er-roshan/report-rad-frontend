@@ -32,8 +32,16 @@ const routes = [
                 component: ()=> import('./pages/templates/index.vue')
             },
             {
+                path: '/templates/create',
+                component: ()=> import('./pages/templates/create.vue')
+            },
+            {
                 path: '/reports',
                 component: ()=> import('./pages/reports/index.vue')
+            },
+            {
+                path: '/reports/create',
+                component: ()=> import('./pages/reports/create.vue')
             },
         ]
     },
