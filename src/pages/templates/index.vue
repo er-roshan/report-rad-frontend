@@ -1,6 +1,6 @@
 <template>
     <div class="py-6">
-        <MainHeader title="Templates" url="/templates" />
+        <MainHeader title="Templates" url="/templates/create" />
         <div class="px-4 sm:px-6 md:px-0">
             <!-- Replace with your content -->
             <div class="py-4">
