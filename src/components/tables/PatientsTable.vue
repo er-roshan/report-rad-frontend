@@ -12,28 +12,32 @@
                                         Name
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                        Title</th>
+                                        Phone</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Email</th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                        Role</th>
+                                        Refer By</th>
                                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                         <span class="sr-only">Edit</span>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                                <tr v-for="person in people" :key="person.email">
+                                <tr v-if="patientStore.loading">Loading....</tr>
+                                <tr v-else-if="patientStore.patients.length === 0">
+                                    <div class="p-4 text-center">No Data Available Currently...</div>
+                                </tr>
+                                <tr v-for="person in patientStore.patients" :key="person.email" v-else>
                                     <td
                                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                         {{
                                             person.name
                                         }}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.title }}
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.phone }}
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.email }}
                                     </td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.role }}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.refer_by }}</td>
                                     <td
                                         class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                         <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span
@@ -52,8 +56,12 @@
 </template>
 
 <script setup>
-const people = [
-    { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
-    // More people...
-]
+import { onMounted } from 'vue';
+import { usePatientStore } from '../../store/patient';
+
+const patientStore = usePatientStore();
+
+onMounted(() => {
+    patientStore.getPatients();  
+})
 </script>
