@@ -1,5 +1,5 @@
 <template>
-  <form class="space-y-8 divide-y divide-gray-200" @submit.prevent="createPatient">
+  <form class="space-y-8 divide-y divide-gray-200" @submit.prevent="onSubmit">
     <div class="space-y-8 divide-y divide-gray-200">
       <div>
         <div class="flex justify-between">
@@ -10,7 +10,7 @@
           <div class="sm:col-span-4">
             <label for="template-name" class="report-label">Template name <span class="text-red-600">*</span></label>
             <div class="mt-1">
-              <input v-model="form_data.template_name" type="text" name="template-name" id="template-name" autocomplete="given-name"
+              <input v-model="form_data.name" type="text" name="template-name" id="template-name" autocomplete="given-name"
                 class="report-input" />
             </div>
           </div>
@@ -49,17 +49,19 @@
 import { reactive, ref } from 'vue';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import { useTemplateStore } from '../../store/template';
+
+const store  = useTemplateStore()
 
 const form_data = reactive({
-  template_name: '',
+  name: '',
   content: '',
   status: 'draft'
 })
 
 
-const createPatient = () => {
-  console.table(form_data)
-
+const onSubmit = () => {
+  store.createTemplate(form_data);
 }
 
 </script>
