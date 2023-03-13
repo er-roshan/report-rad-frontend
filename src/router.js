@@ -1,4 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from './store/auth'
+
+const authGuard = (to, from, next) => {
+    const authStore = useAuthStore()
+    if(to.meta.requiresAuth && authStore.token === null) {
+        next({name: 'login'})
+    } else {
+        next()
+    }
+}
 
 const routes = [
     {
@@ -6,6 +16,8 @@ const routes = [
         redirect: '/dashboard',
         name: 'Dashboard',
         component: ()=> import('./layouts/default.vue'),
+        meta: {requiresAuth: true},
+        beforeEnter: authGuard,
         children: [
             {
                 path: '/dashboard',
@@ -46,9 +58,15 @@ const routes = [
         ]
     },
     {
+        name: 'login',
         path: '/login',
         component: ()=> import('./pages/login.vue')
-    }
+    },
+    {
+        name: 'register',
+        path: '/register',
+        component: ()=> import('./pages/register.vue')
+    },
 ]
 
 const router = createRouter({
