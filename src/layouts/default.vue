@@ -132,7 +132,7 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
+  import { ref, watch, computed, reactive, onMounted } from 'vue'
   import {
     Dialog,
     DialogPanel,
@@ -155,19 +155,40 @@
     XMarkIcon,
   } from '@heroicons/vue/24/outline'
   import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+  const currentRoute = ref('/dashboard');
+
+  const checkPath = (value) => {
+    return currentRoute.value === value ? true : false;
+  }
+
+  watch(
+    () => route.path,
+    (newPath, oldPath) => {
+      currentRoute.value = newPath;
+    }
+  )
   
-  const navigation = [
-    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-    { name: 'Staffs', href: '/staffs', icon: UsersIcon, current: false },
-    { name: 'Templates', href: '/templates', icon: FolderIcon, current: false },
-    { name: 'Patients', href: '/patients', icon: CalendarIcon, current: false },
-    { name: 'Reports', href: '/reports', icon: ChartBarIcon, current: false },
-  ]
+  const navigation = reactive([
+    { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: computed(() => checkPath('/dashboard') ) },
+    { name: 'Staffs', href: '/staffs', icon: UsersIcon, current: computed(() => checkPath('/staffs')) },
+    { name: 'Templates', href: '/templates', icon: FolderIcon, current: computed(() => checkPath('/templates') ) },
+    { name: 'Patients', href: '/patients', icon: CalendarIcon, current: computed(() => checkPath('/patients') ) },
+    { name: 'Reports', href: '/reports', icon: ChartBarIcon, current: computed(() => checkPath('/reports') ) },
+  ])
   const userNavigation = [
     { name: 'Your Profile', href: '#' },
     { name: 'Settings', href: '#' },
     { name: 'Sign out', href: '#' },
   ]
   
-  const sidebarOpen = ref(false)
+  const sidebarOpen = ref(false);
+
+  onMounted(() => {
+    currentRoute.value = route.path;
+  })
+
   </script>
