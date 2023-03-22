@@ -174,6 +174,7 @@ const route = useRoute();
   
   const navigation = reactive([
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: computed(() => checkPath('/dashboard') ) },
+    { name: 'Partners', href: '/partners', icon: UsersIcon, current: computed(() => checkPath('/partners')) },
     { name: 'Staffs', href: '/staffs', icon: UsersIcon, current: computed(() => checkPath('/staffs')) },
     { name: 'Templates', href: '/templates', icon: FolderIcon, current: computed(() => checkPath('/templates') ) },
     { name: 'Patients', href: '/patients', icon: CalendarIcon, current: computed(() => checkPath('/patients') ) },

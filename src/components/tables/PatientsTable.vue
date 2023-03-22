@@ -39,11 +39,19 @@
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.refer_by }}</td>
                                     <td
-                                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span
+                                        class="relative flex items-center justify-end gap-x-2 whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                        <a href="#" class="text-red-600 hover:text-red-700"><TrashIcon class="w-5" /><span
                                                 class="sr-only">, {{
-    person.name
+                                                    person.name
                                                 }}</span></a>
+                                        <a href="#" class="text-indigo-600 hover:text-indigo-700"><PencilSquareIcon class="w-5" /><span
+                                                class="sr-only">, {{
+                                                    person.name
+                                                }}</span></a>
+                                        <RouterLink :to="'/patients/' + person.id" class="text-green-600 hover:text-green-700 flex items-center"> <EyeIcon class="w-5" /><span
+                                                class="sr-only">, {{
+                                                    person.name
+                                                }}</span></RouterLink>
                                     </td>
                                 </tr>
                             </tbody>
@@ -58,6 +66,8 @@
 <script setup>
 import { onMounted } from 'vue';
 import { usePatientStore } from '../../store/patient';
+import { EyeIcon, PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline"
+
 
 const patientStore = usePatientStore();
 

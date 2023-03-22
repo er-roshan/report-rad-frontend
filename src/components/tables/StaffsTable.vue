@@ -25,10 +25,23 @@
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.title }}</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.email }}</td>
                   <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ person.role }}</td>
-                  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span class="sr-only">, {{
-                      person.name
-                    }}</span></a>
+                  <td
+                    class="relative whitespace-nowrap flex items-center justify-end gap-x-2 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    <a href="#" class="text-red-600 hover:text-red-700">
+                      <TrashIcon class="w-5" /><span class="sr-only">, {{
+                        person.name
+                      }}</span>
+                    </a>
+                    <a href="#" class="text-indigo-600 hover:text-indigo-700">
+                      <PencilSquareIcon class="w-5" /><span class="sr-only">, {{
+                        person.name
+                      }}</span>
+                    </a>
+                    <a href="#" class="text-green-600 hover:text-green-700 flex items-center">
+                      <EyeIcon class="w-5" /><span class="sr-only">, {{
+                        person.name
+                      }}</span>
+                    </a>
                   </td>
                 </tr>
               </tbody>
@@ -41,6 +54,8 @@
 </template>
 
 <script setup>
+import { EyeIcon, PencilSquareIcon, TrashIcon } from "@heroicons/vue/24/outline"
+
 const people = [
   { name: 'Lindsay Walton', title: 'Front-end Developer', email: 'lindsay.walton@example.com', role: 'Member' },
   // More people...

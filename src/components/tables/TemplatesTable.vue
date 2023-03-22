@@ -32,12 +32,20 @@
                                         <span :class="[ 'capitalize inline-flex rounded-full  px-2 text-xs font-medium leading-5 ', template.status === 'published' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' ]">{{ template.status }}</span>
                                     </td>
                                     <td
-                                        class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                        <a href="#" class="text-red-600 hover:text-red-900 mr-4">Delete<span
+                                        class="relative whitespace-nowrap flex items-center justify-end gap-x-2 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                        <a href="#" class="text-red-600 hover:text-red-700"><TrashIcon class="w-5" /><span
                                                 class="sr-only">, {{
                                                     template.name
                                                 }}</span></a>
-                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit<span
+                                        <RouterLink :to="'/templates/edit/' + template.id" class="text-indigo-600 hover:text-indigo-700"><PencilSquareIcon class="w-5" /><span
+                                                class="sr-only">, {{
+                                                    template.name
+                                                }}</span></RouterLink>
+                                        <a href="#" class="text-green-600 hover:text-green-700 flex items-center"> <EyeIcon class="w-5" /><span
+                                                class="sr-only">, {{
+                                                    template.name
+                                                }}</span></a>
+                                        <a href="#" class="text-gray-600 hover:text-gray-700 flex items-center"> <DocumentDuplicateIcon class="w-5" /><span
                                                 class="sr-only">, {{
                                                     template.name
                                                 }}</span></a>
@@ -55,6 +63,8 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useTemplateStore } from '../../store/template';
+import { EyeIcon, PencilSquareIcon, TrashIcon,DocumentDuplicateIcon } from "@heroicons/vue/24/outline"
+
 
 const templateStore = useTemplateStore();
 
