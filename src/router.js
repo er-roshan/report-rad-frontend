@@ -40,12 +40,20 @@ const routes = [
                 component: ()=> import('./pages/patients/create.vue')
             },
             {
+                path: '/patients/:id',
+                component: ()=> import('./pages/patients/detail.vue')
+            },
+            {
                 path: '/templates',
                 component: ()=> import('./pages/templates/index.vue')
             },
             {
                 path: '/templates/create',
                 component: ()=> import('./pages/templates/create.vue')
+            },
+            {
+                path: '/templates/edit/:id',
+                component: ()=> import('./pages/templates/edit.vue')
             },
             {
                 path: '/reports',
@@ -55,6 +63,15 @@ const routes = [
                 path: '/reports/create',
                 component: ()=> import('./pages/reports/create.vue')
             },
+            {
+                path: '/partners',
+                component: ()=> import('./pages/partners.vue')
+            },
+            {
+                path: '/partners/edit/:id',
+                component: ()=> import('./pages/partners.vue')
+            },
+            
         ]
     },
     {
