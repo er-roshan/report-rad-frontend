@@ -6,12 +6,21 @@
           <h2 class="text-2xl font-medium leading-6 text-gray-900">Create Templates</h2>
           <RouterLink to="/templates" class="global-btn danger-btn">Cancel</RouterLink>
         </div>
-        <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+        <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-8">
           <div class="sm:col-span-4">
             <label for="template-name" class="report-label">Template name <span class="text-red-600">*</span></label>
             <div class="mt-1">
               <input v-model="form_data.name" type="text" name="template-name" id="template-name" autocomplete="given-name"
                 class="report-input" />
+            </div>
+          </div>
+          <div class="sm:col-span-2">
+            <label for="status" class="report-label">Department</label>
+            <div class="mt-1">
+              <select v-model="form_data.department_id" id="status" name="status" autocomplete="status"
+                class="report-input">
+                <option v-for="department in departmentStore.departments" :value="department.id">{{department.name}}</option>
+              </select>
             </div>
           </div>
           <div class="sm:col-span-2">
@@ -25,7 +34,7 @@
             </div>
           </div>
 
-          <div class="sm:col-span-6">
+          <div class="sm:col-span-8">
             <QuillEditor theme="snow" v-model:content="form_data.content" content-type="html" />
           </div>
         </div>
@@ -46,22 +55,29 @@
 
 
 <script setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { useTemplateStore } from '../../store/template';
+import { useDepartmentStore } from '../../store/department';
 
-const store  = useTemplateStore()
+const templateStore  = useTemplateStore()
+const departmentStore = useDepartmentStore()
 
 const form_data = reactive({
   name: '',
   content: '',
+  department_id: '',
   status: 'draft'
 })
 
 
 const onSubmit = () => {
-  store.createTemplate(form_data);
+  templateStore.createTemplate(form_data);
 }
+
+onMounted(() => {
+  departmentStore.getDepartments()
+})
 
 </script>
