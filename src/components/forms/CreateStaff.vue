@@ -1,5 +1,5 @@
 <template>
-  <form class="space-y-8 divide-y divide-gray-200">
+  <form class="space-y-8 divide-y divide-gray-200" @submit.prevent="onSubmit">
     <div class="space-y-8 divide-y divide-gray-200">
       <div>
         <div class="flex justify-between">
@@ -8,151 +8,157 @@
         </div>
         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
           <div class="sm:col-span-3">
-            <label for="first-name" class="report-label">First name</label>
+            <label for="full-name" class="report-label">Full name <span class="text-red-600">*</span></label>
             <div class="mt-1">
-              <input type="text" name="first-name" id="first-name" autocomplete="given-name"
+              <input v-model="data.name" type="text" name="full-name" id="full-name" autocomplete="given-name"
                 class="report-input" />
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="last-name" class="report-label">Last name</label>
-            <div class="mt-1">
-              <input type="text" name="last-name" id="last-name" autocomplete="family-name"
-                class="report-input" />
-            </div>
-          </div>
-
-          <div class="sm:col-span-4">
             <label for="email" class="report-label">Email address</label>
             <div class="mt-1">
-              <input id="email" name="email" type="email" autocomplete="email"
+              <input v-model="data.email" id="email" name="email" type="email" autocomplete="email" class="report-input" />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="password" class="report-label">Password</label>
+            <div class="mt-1">
+              <input v-model="data.password" id="password" name="password" type="password" autocomplete="password" class="report-input" />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="password_confirmation" class="report-label">Password Confirmation</label>
+            <div class="mt-1">
+              <input v-model="data.password_confirmation" id="password_confirmation" name="password_confirmation" type="password" autocomplete="password_confirmation" class="report-input" />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <label for="address" class="report-label">Address</label>
+            <div class="mt-1">
+              <input v-model="data.address" type="text" name="address" id="address" autocomplete="address"
+                class="report-input" />
+            </div>
+          </div>
+          <div class="sm:col-span-3">
+            <label for="phone" class="report-label">Phone Number <span class="text-red-600">*</span></label>
+            <div class="mt-1">
+              <input v-model="data.phone" type="text" name="phone" id="phone" autocomplete="phone"
                 class="report-input" />
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="country" class="report-label">Country</label>
-            <div class="mt-1">
-              <select id="country" name="country" autocomplete="country-name"
+            <label for="role" class="report-label">Role <span class="text-red-600">*</span></label>
+            <div class="mt-1 ">
+              <select v-model="data.role" id="role" name="role" 
                 class="report-input">
-                <option>United States</option>
-                <option>Canada</option>
-                <option>Mexico</option>
+                <option selected disabled>Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="staff">Staff</option>
+                <option value="manager">Manager</option>
               </select>
             </div>
           </div>
 
-          <div class="sm:col-span-6">
-            <label for="street-address" class="report-label">Street address</label>
+          <!-- <div class="sm:col-span-3">
+            <div>
+              <label class="report-label">Gender <span class="text-red-600">*</span></label>
+              <fieldset class="mt-2">
+                <legend class="sr-only">Notification method</legend>
+                <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+                  <div class="flex items-center">
+                    <input value="male" v-model="data.gender" id="email" name="notification-method" type="radio" checked
+                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="email" class="ml-3 block text-sm font-medium text-gray-700">Male</label>
+                  </div>
+
+                  <div class="flex items-center">
+                    <input value="female" v-model="data.gender" id="sms" name="notification-method" type="radio"
+                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="sms" class="ml-3 block text-sm font-medium text-gray-700">Female</label>
+                  </div>
+
+                  <div class="flex items-center">
+                    <input value="others" v-model="data.gender" id="push" name="notification-method" type="radio"
+                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="push" class="ml-3 block text-sm font-medium text-gray-700">Others</label>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </div> -->
+
+          
+
+          <div class="sm:col-span-3">
+            <label for="refer-by" class="report-label">Refer by</label>
             <div class="mt-1">
-              <input type="text" name="street-address" id="street-address" autocomplete="street-address"
-                class="report-input" />
+              <input v-model="data.refer_by" type="text" name="refer-by" id="refer-by" autocomplete="address-level2" class="report-input" />
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="city" class="report-label">City</label>
+          <!-- <div class="sm:col-span-3">
+            <label for="region" class="report-label">Investigation <span class="text-red-600">*</span></label>
             <div class="mt-1">
-              <input type="text" name="city" id="city" autocomplete="address-level2"
-                class="report-input" />
+              <input v-model="data.investigation" type="text" name="region" id="region" autocomplete="address-level1" class="report-input" />
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="region" class="report-label">State / Province</label>
+          <div class="sm:col-span-3">
+            <label for="postal-code" class="report-label">Performing Doctor <span class="text-red-600">*</span></label>
             <div class="mt-1">
-              <input type="text" name="region" id="region" autocomplete="address-level1"
-                class="report-input" />
+              <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code" class="report-input" />
             </div>
           </div>
 
-          <div class="sm:col-span-2">
-            <label for="postal-code" class="report-label">ZIP / Postal code</label>
+          <div class="sm:col-span-3">
+            <label for="status" class="report-label">Template</label>
             <div class="mt-1">
-              <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code"
-                class="report-input" />
+              <select v-model="data.status" id="status" name="status" autocomplete="status"
+                class="report-input">
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+              </select>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="pt-8">
-        <div>
-          <h3 class="text-lg font-medium leading-6 text-gray-900">Notifications</h3>
-          <p class="mt-1 text-sm text-gray-500">We'll always let you know about important changes, but you pick what
-            else you want to hear about.</p>
-        </div>
-        <div class="mt-6">
-          <fieldset>
-            <legend class="sr-only">By Email</legend>
-            <div class="text-base font-medium text-gray-900" aria-hidden="true">By Email</div>
-            <div class="mt-4 space-y-4">
-              <div class="relative flex items-start">
-                <div class="flex h-5 items-center">
-                  <input id="comments" name="comments" type="checkbox"
-                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                </div>
-                <div class="ml-3 text-sm">
-                  <label for="comments" class="font-medium text-gray-700">Comments</label>
-                  <p class="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-                </div>
-              </div>
-              <div class="relative flex items-start">
-                <div class="flex h-5 items-center">
-                  <input id="candidates" name="candidates" type="checkbox"
-                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                </div>
-                <div class="ml-3 text-sm">
-                  <label for="candidates" class="font-medium text-gray-700">Candidates</label>
-                  <p class="text-gray-500">Get notified when a candidate applies for a job.</p>
-                </div>
-              </div>
-              <div class="relative flex items-start">
-                <div class="flex h-5 items-center">
-                  <input id="offers" name="offers" type="checkbox"
-                    class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                </div>
-                <div class="ml-3 text-sm">
-                  <label for="offers" class="font-medium text-gray-700">Offers</label>
-                  <p class="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-          <fieldset class="mt-6">
-            <legend class="contents text-base font-medium text-gray-900">Push Notifications</legend>
-            <p class="text-sm text-gray-500">These are delivered via SMS to your mobile phone.</p>
-            <div class="mt-4 space-y-4">
-              <div class="flex items-center">
-                <input id="push-everything" name="push-notifications" type="radio"
-                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label for="push-everything" class="ml-3 report-label">Everything</label>
-              </div>
-              <div class="flex items-center">
-                <input id="push-email" name="push-notifications" type="radio"
-                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label for="push-email" class="ml-3 report-label">Same as email</label>
-              </div>
-              <div class="flex items-center">
-                <input id="push-nothing" name="push-notifications" type="radio"
-                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-                <label for="push-nothing" class="ml-3 report-label">No push
-                  notifications</label>
-              </div>
-            </div>
-          </fieldset>
+          </div> -->
         </div>
       </div>
     </div>
 
     <div class="pt-5">
       <div class="flex justify-end">
-        <button type="button"
-          class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</button>
+        <RouterLink to="/staffs"
+          class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</RouterLink>
         <button type="submit"
           class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
       </div>
     </div>
   </form>
 </template>
+
+
+<script setup>
+import { reactive } from 'vue';
+import { usePatientStore } from '../../store/patient';
+
+const patientStore = usePatientStore()
+
+const data = reactive({
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
+  gender: 'male',
+  address: '',
+  refer_by: '',
+  phone: '',
+})
+
+const onSubmit = ()=> {
+  patientStore.createPatient({ ...data , age: JSON.stringify(data.age)})
+}
+</script>

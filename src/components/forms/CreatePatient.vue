@@ -18,7 +18,36 @@
           <div class="sm:col-span-3">
             <label for="email" class="report-label">Email address</label>
             <div class="mt-1">
-              <input v-model="data.email" id="email" name="email" type="email" autocomplete="email" class="report-input" />
+              <input v-model="data.email" id="email" name="email" type="email" autocomplete="email"
+                class="report-input" />
+            </div>
+          </div>
+
+          <div class="sm:col-span-3">
+            <div>
+              <label class="report-label">Gender <span class="text-red-600">*</span></label>
+              <fieldset name="fieldsetGender" class="mt-2">
+                <legend class="sr-only">Gender Selection</legend>
+                <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
+                  <div class="flex items-center">
+                    <input value="male" v-model="data.gender" id="male" name="gender-method" type="radio" checked
+                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="male" class="ml-3 block text-sm font-medium text-gray-700">Male</label>
+                  </div>
+
+                  <div class="flex items-center">
+                    <input value="female" v-model="data.gender" id="female" name="gender-method" type="radio"
+                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="female" class="ml-3 block text-sm font-medium text-gray-700">Female</label>
+                  </div>
+
+                  <div class="flex items-center">
+                    <input value="others" v-model="data.gender" id="others" name="gender-method" type="radio"
+                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                    <label for="others" class="ml-3 block text-sm font-medium text-gray-700">Others</label>
+                  </div>
+                </div>
+              </fieldset>
             </div>
           </div>
 
@@ -29,69 +58,50 @@
                 class="report-input" />
             </div>
           </div>
+
           <div class="sm:col-span-3">
             <label for="phone" class="report-label">Phone Number <span class="text-red-600">*</span></label>
             <div class="mt-1">
-              <input v-model="data.phone" type="text" name="phone" id="phone" autocomplete="phone"
-                class="report-input" />
+              <input v-model="data.phone" type="text" name="phone" id="phone" autocomplete="phone" class="report-input" />
             </div>
           </div>
 
           <div class="sm:col-span-3">
-            <label for="country" class="report-label">Age <span class="text-red-600">*</span></label>
-            <div class="mt-1 flex justify-center gap-x-2">
-              <input v-model="data.age.age_value" id="age_value" name="age_value" type="text" class="report-input" />
+            <label for="age" class="report-label">Age <span class="text-red-600">*</span></label>
+            <div class="mt-1 flex justify-start items-center gap-x-5">
+              <input v-model="data.age.age_value" id="age_value" name="age_value" type="number" class="report-input w-20"
+                min="0" />
 
-              <select v-model="data.age.age_unit" id="age-unit" name="age-unit" 
-                class="report-input">
-                <option selected disabled>Select Unit</option>
-                <option value="years">Years</option>
-                <option value="months">Months</option>
-                <option value="days">Days</option>
-              </select>
-              <select v-model="data.age.age_type" id="age-type" name="age-type"
-                class="report-input">
-                <option value="adult">Adult</option>
-                <option value="kids">Kids</option>
-                <option value="infants">Infants</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="sm:col-span-3">
-            <div>
-              <label class="report-label">Gender <span class="text-red-600">*</span></label>
-              <fieldset class="mt-2">
-                <legend class="sr-only">Notification method</legend>
+              <fieldset name="fieldsetAge" class="">
+                <legend class="sr-only">Age Type</legend>
                 <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                   <div class="flex items-center">
-                    <input value="male" v-model="data.gender" id="email" name="notification-method" type="radio" checked
+                    <input value="years" v-model="data.age.age_unit" id="years" name="age-method" type="radio" checked
                       class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="email" class="ml-3 block text-sm font-medium text-gray-700">Male</label>
+                    <label for="years" class="ml-3 block text-sm font-medium text-gray-700">Years</label>
                   </div>
 
                   <div class="flex items-center">
-                    <input value="female" v-model="data.gender" id="sms" name="notification-method" type="radio"
+                    <input value="months" v-model="data.age.age_unit" id="months" name="age-method" type="radio"
                       class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="sms" class="ml-3 block text-sm font-medium text-gray-700">Female</label>
+                    <label for="months" class="ml-3 block text-sm font-medium text-gray-700">Months</label>
                   </div>
 
                   <div class="flex items-center">
-                    <input value="others" v-model="data.gender" id="push" name="notification-method" type="radio"
+                    <input value="days" v-model="data.age.age_unit" id="days" name="age-method" type="radio"
                       class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="push" class="ml-3 block text-sm font-medium text-gray-700">Others</label>
+                    <label for="days" class="ml-3 block text-sm font-medium text-gray-700">Days</label>
                   </div>
                 </div>
               </fieldset>
             </div>
           </div>
 
-          
-
           <div class="sm:col-span-3">
             <label for="refer-by" class="report-label">Refer by</label>
             <div class="mt-1">
-              <input v-model="data.refer_by" type="text" name="refer-by" id="refer-by" autocomplete="address-level2" class="report-input" />
+              <input v-model="data.refer_by" type="text" name="refer-by" id="refer-by" autocomplete="address-level2"
+                class="report-input" />
             </div>
           </div>
 
@@ -125,8 +135,9 @@
 
     <div class="pt-5">
       <div class="flex justify-end">
-        <button type="button"
-          class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</button>
+        <RouterLink to="/patients"
+          class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          Cancel</RouterLink>
         <button type="submit"
           class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
       </div>
@@ -146,8 +157,7 @@ const data = reactive({
   email: '',
   age: {
     age_value: '',
-    age_unit: '',
-    age_type: '',
+    age_unit: 'years',
   },
   gender: 'male',
   address: '',
@@ -155,7 +165,7 @@ const data = reactive({
   phone: '',
 })
 
-const onSubmit = ()=> {
-  patientStore.createPatient({ ...data , age: JSON.stringify(data.age)})
+const onSubmit = () => {
+  patientStore.createPatient({ ...data, age: JSON.stringify(data.age) })
 }
 </script>

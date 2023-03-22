@@ -9,12 +9,28 @@ export const usePatientStore = defineStore('patient', ()=> {
     const loading = ref(false);
     const errors = ref(null);
     const router = useRouter();
+    const patient = ref(null);
 
     const getPatients = async() => {
         loading.value = true;
         await axiosClient.get('/patients').then(({data}) => {
             loading.value = false;
             patients.value = data.data;
+        }).catch(err => {
+            loading.value = false;
+            const response = err.response;
+            if(response && response.status ===422 ) {
+                errors.value = response.data.errors;
+            }
+        })
+    }
+
+    const getPatient = async(payload) => {
+        console.log("Fetching Patient Data ", payload)
+        loading.value = true;
+        await axiosClient.get('/patients/' + payload).then(({data}) => {
+            loading.value = false;
+            patient.value = data;
         }).catch(err => {
             loading.value = false;
             const response = err.response;
@@ -38,5 +54,5 @@ export const usePatientStore = defineStore('patient', ()=> {
         })
     }
 
-    return { patients, loading, errors, getPatients, createPatient}
+    return { patients, patient, loading, errors, getPatients, getPatient, createPatient}
 })

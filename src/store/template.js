@@ -8,12 +8,28 @@ export const useTemplateStore = defineStore('template', () => {
     const loading = ref(false);
     const errors = ref(null);
     const router = useRouter();
+    const template = ref(null);
     
     const getTemplates = async() => {
         loading.value = true;
         await axiosClient.get('/templates').then(({data}) => {
             loading.value = false;
             templates.value = data.data;
+        }).catch(err => {
+            loading.value = false;
+            const response = err.response;
+            if(response && response.status ===422 ) {
+                errors.value = response.data.errors;
+            }
+        })
+    }
+
+    const getTemplate = async(payload) => {
+        console.log("Fetching Template Data ", payload)
+        loading.value = true;
+        await axiosClient.get('/templates/' + payload).then(({data}) => {
+            loading.value = false;
+            template.value = data;
         }).catch(err => {
             loading.value = false;
             const response = err.response;
@@ -38,5 +54,5 @@ export const useTemplateStore = defineStore('template', () => {
     }
 
 
-    return { templates, loading, errors, getTemplates, createTemplate}
+    return { templates, template, loading, errors, getTemplates, getTemplate, createTemplate}
 })
