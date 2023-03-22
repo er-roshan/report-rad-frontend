@@ -176,6 +176,7 @@ const route = useRoute();
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: computed(() => checkPath('/dashboard') ) },
     { name: 'Partners', href: '/partners', icon: UsersIcon, current: computed(() => checkPath('/partners')) },
     { name: 'Staffs', href: '/staffs', icon: UsersIcon, current: computed(() => checkPath('/staffs')) },
+    { name: 'Departments', href: '/departments', icon: FolderIcon, current: computed(() => checkPath('/departments')) },
     { name: 'Templates', href: '/templates', icon: FolderIcon, current: computed(() => checkPath('/templates') ) },
     { name: 'Patients', href: '/patients', icon: CalendarIcon, current: computed(() => checkPath('/patients') ) },
     { name: 'Reports', href: '/reports', icon: ChartBarIcon, current: computed(() => checkPath('/reports') ) },
