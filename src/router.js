@@ -71,6 +71,14 @@ const routes = [
                 path: '/partners/edit/:id',
                 component: ()=> import('./pages/partners.vue')
             },
+            {
+                path: '/departments',
+                component: ()=> import('./pages/departments/index.vue')
+            },
+            {
+                path: '/departments/edit/:id',
+                component: ()=> import('./pages/departments/index.vue')
+            },
             
         ]
     },
