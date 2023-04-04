@@ -10,8 +10,8 @@
           <div class="sm:col-span-4">
             <label for="template-name" class="report-label">Template name <span class="text-red-600">*</span></label>
             <div class="mt-1">
-              <input v-model="form_data.name" type="text" name="template-name" id="template-name" autocomplete="given-name"
-                class="report-input" />
+              <input v-model="form_data.name" type="text" name="template-name" id="template-name"
+                autocomplete="given-name" class="report-input" />
             </div>
           </div>
           <div class="sm:col-span-2">
@@ -19,15 +19,15 @@
             <div class="mt-1">
               <select v-model="form_data.department_id" id="status" name="status" autocomplete="status"
                 class="report-input">
-                <option v-for="department in departmentStore.departments" :value="department.id">{{department.name}}</option>
+                <option v-for="department in departmentStore.departments" :value="department.id">{{ department.name }}
+                </option>
               </select>
             </div>
           </div>
           <div class="sm:col-span-2">
             <label for="status" class="report-label">Status</label>
             <div class="mt-1">
-              <select v-model="form_data.status" id="status" name="status" autocomplete="status"
-                class="report-input">
+              <select v-model="form_data.status" id="status" name="status" autocomplete="status" class="report-input">
                 <option value="draft">Draft</option>
                 <option value="published">Published</option>
               </select>
@@ -60,9 +60,13 @@ import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import { useTemplateStore } from '../../store/template';
 import { useDepartmentStore } from '../../store/department';
+import { useRouter } from 'vue-router';
+import { notify } from '@kyvg/vue3-notification';
 
-const templateStore  = useTemplateStore()
+const templateStore = useTemplateStore()
 const departmentStore = useDepartmentStore()
+
+const router = useRouter();
 
 const form_data = reactive({
   name: '',
@@ -72,8 +76,16 @@ const form_data = reactive({
 })
 
 
-const onSubmit = () => {
-  templateStore.createTemplate(form_data);
+const onSubmit = async () => {
+  const res = await templateStore.createTemplate(form_data);
+  if (res.status === 201) {
+    notify({
+      title: "Created",
+      text: "Template Created Successfully",
+      type: 'success'
+    })
+    router.push('/templates')
+  }
 }
 
 onMounted(() => {

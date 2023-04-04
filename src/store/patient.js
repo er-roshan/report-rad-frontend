@@ -42,9 +42,10 @@ export const usePatientStore = defineStore('patient', ()=> {
 
     const createPatient = async(payload)=> {
         loading.value = true;
-        await axiosClient.post('/patients', payload).then(({ data }) => {
+        return await axiosClient.post('/patients', payload).then((response) => {
             loading.value = false;
-            router.push('/patients')
+            return response;
+            //router.push('/patients')
         }).catch(err => {
             loading.value = false;
             const response = err.response;

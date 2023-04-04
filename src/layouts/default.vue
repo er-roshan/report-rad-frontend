@@ -146,13 +146,14 @@
   import {
     Bars3BottomLeftIcon,
     BellIcon,
-    CalendarIcon,
     ChartBarIcon,
     FolderIcon,
     HomeIcon,
-    InboxIcon,
     UsersIcon,
     XMarkIcon,
+    CheckBadgeIcon,
+    UserGroupIcon,
+    SquaresPlusIcon
   } from '@heroicons/vue/24/outline'
   import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 import { useRoute } from 'vue-router';
@@ -174,11 +175,11 @@ const route = useRoute();
   
   const navigation = reactive([
     { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: computed(() => checkPath('/dashboard') ) },
-    { name: 'Partners', href: '/partners', icon: UsersIcon, current: computed(() => checkPath('/partners')) },
+    { name: 'Partners', href: '/partners', icon: CheckBadgeIcon, current: computed(() => checkPath('/partners')) },
     { name: 'Staffs', href: '/staffs', icon: UsersIcon, current: computed(() => checkPath('/staffs')) },
-    { name: 'Departments', href: '/departments', icon: FolderIcon, current: computed(() => checkPath('/departments')) },
+    { name: 'Departments', href: '/departments', icon: SquaresPlusIcon, current: computed(() => checkPath('/departments')) },
     { name: 'Templates', href: '/templates', icon: FolderIcon, current: computed(() => checkPath('/templates') ) },
-    { name: 'Patients', href: '/patients', icon: CalendarIcon, current: computed(() => checkPath('/patients') ) },
+    { name: 'Patients', href: '/patients', icon: UserGroupIcon, current: computed(() => checkPath('/patients') ) },
     { name: 'Reports', href: '/reports', icon: ChartBarIcon, current: computed(() => checkPath('/reports') ) },
   ])
   const userNavigation = [

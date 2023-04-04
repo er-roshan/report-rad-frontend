@@ -1,20 +1,20 @@
 import { defineStore } from "pinia";
-import { ref, computed } from "vue";
-import { useRouter } from 'vue-router'
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import axiosClient from "../axios-client";
 
-export const useTemplateStore = defineStore('template', () => {
-    const templates = ref([]); // state
+
+export const useStaffStore = defineStore('staff', ()=> {
+    const staffs = ref([]);
     const loading = ref(false);
     const errors = ref(null);
     const router = useRouter();
-    const template = ref(null);
-    
-    const getTemplates = async() => {
+
+    const getStaffs = async() => {
         loading.value = true;
-        await axiosClient.get('/templates').then(({data}) => {
+        await axiosClient.get('/staffs').then(({data}) => {
             loading.value = false;
-            templates.value = data.data;
+            staffs.value = data.data;
         }).catch(err => {
             loading.value = false;
             const response = err.response;
@@ -24,12 +24,11 @@ export const useTemplateStore = defineStore('template', () => {
         })
     }
 
-    const getTemplate = async(payload) => {
-        console.log("Fetching Template Data ", payload)
+    const createStaff = async(payload)=> {
         loading.value = true;
-        await axiosClient.get('/templates/' + payload).then(({data}) => {
+        return await axiosClient.post('/staffs', payload).then((response) => {
             loading.value = false;
-            template.value = data;
+            return response
         }).catch(err => {
             loading.value = false;
             const response = err.response;
@@ -39,11 +38,11 @@ export const useTemplateStore = defineStore('template', () => {
         })
     }
 
-    const createTemplate = async(payload)=> {
+    const deleteStaff = async(payload) => {
         loading.value = true;
-        return await axiosClient.post('/templates', payload).then((response) => {
+        return await axiosClient.delete('/staffs/' + payload).then((response) => {
             loading.value = false;
-            return response;
+            return response
         }).catch(err => {
             loading.value = false;
             const response = err.response;
@@ -54,5 +53,5 @@ export const useTemplateStore = defineStore('template', () => {
     }
 
 
-    return { templates, template, loading, errors, getTemplates, getTemplate, createTemplate}
+    return { staffs, loading, errors, getStaffs, createStaff, deleteStaff }
 })

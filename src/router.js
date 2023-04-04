@@ -60,7 +60,7 @@ const routes = [
                 component: ()=> import('./pages/reports/index.vue')
             },
             {
-                path: '/reports/create',
+                path: '/reports/create/:id',
                 component: ()=> import('./pages/reports/create.vue')
             },
             {
