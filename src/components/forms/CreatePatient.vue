@@ -3,7 +3,7 @@
     <div class="space-y-8 divide-y divide-gray-200">
       <div>
         <div class="flex justify-between">
-          <h2 class="text-2xl font-medium leading-6 text-gray-900">Create Patients</h2>
+          <h2 class="text-2xl font-medium leading-6 text-gray-900">Create Patients for <span class="text-green-500">{{ hospitalStore.activeHospital.name }}</span> </h2>
           <button @click.prevent="emits('close')" class="global-btn danger-btn">Cancel</button>
         </div>
         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -128,10 +128,12 @@
 <script setup>
 import { reactive } from 'vue';
 import { usePatientStore } from '../../store/patient';
+import { useHospitalStore } from '../../store/hospital';
 
 const emits = defineEmits(['close', 'success', 'patientCreated']);
 
 const patientStore = usePatientStore()
+const hospitalStore = useHospitalStore()
 
 let data = reactive({
   name: '',
@@ -147,7 +149,7 @@ let data = reactive({
 })
 
 const onSubmit = async () => {
-  const response = await patientStore.createPatient({ ...data, age: JSON.stringify(data.age) });
+  const response = await patientStore.createPatient({ ...data, age: JSON.stringify(data.age), hospital_id: hospitalStore.activeHospital.id });
   if (response.status === 201) {
     resetData()
     emits('success', response.data)
@@ -155,7 +157,7 @@ const onSubmit = async () => {
 }
 
 const onlyCreate = async () => {
-  const response = await patientStore.createPatient({ ...data, age: JSON.stringify(data.age) });
+  const response = await patientStore.createPatient({ ...data, age: JSON.stringify(data.age), hospital_id: hospitalStore.activeHospital.id });
   if (response.status === 201) {
     resetData()
     emits('patientCreated')

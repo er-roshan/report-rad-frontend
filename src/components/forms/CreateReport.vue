@@ -24,7 +24,7 @@
             <div class="font-medium">Phone Number: {{ entryStore.entry.patient.phone }}</div>
           </div>
           <div class="sm:col-span-2">
-            <div class="font-medium">Requested On: {{ entryStore.entry.patient.created_at.split('T')[0] }}</div>
+            <div class="font-medium">Requested On: {{ entryStore.entry.patient.created_at.split('T')[0] }}<br> ({{ new NepaliDate(entryStore.entry.patient.created_at.split('T')[0]) }})</div>
           </div>
         </div>
         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6 border-t pt-4 mb-4">
@@ -81,9 +81,15 @@ import { useRoute, useRouter } from 'vue-router';
 import { useEntriesStore } from '../../store/entry';
 import { useReportsStore } from '../../store/report';
 import { notify } from '@kyvg/vue3-notification';
+import NepaliDate from 'nepali-date-converter';
+
 
 const route = useRoute()
 const router = useRouter()
+
+const jsDate = new Date();
+
+const nepaliDate = new NepaliDate(jsDate);
 
 // Initialize Store variable
 const patientStore = usePatientStore();

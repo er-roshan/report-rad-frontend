@@ -71,6 +71,7 @@ import { useEntriesStore } from '../../store/entry';
 import { usePatientStore } from '../../store/patient';
 import { useTemplateStore } from '../../store/template';
 import { useStaffStore } from '../../store/staff';
+import { useHospitalStore } from '../../store/hospital';
 
 const emits = defineEmits(['close', 'entrySuccess']);
 
@@ -80,6 +81,7 @@ const staffStore = useStaffStore()
 const departmentStore = useDepartmentStore()
 const templateStore = useTemplateStore()
 const entryStore = useEntriesStore()
+const hospitalStore = useHospitalStore()
 
 
 const data = reactive({
@@ -91,7 +93,7 @@ const data = reactive({
 
 const onSubmit = async () => {
     data.patient_id = props.patientData.id;
-    const res = await entryStore.createEntry(data);
+    const res = await entryStore.createEntry({ ...data, hospital_id: hospitalStore.activeHospital.id });
     if(res.status === 201) {
         emits('entrySuccess')
     }
