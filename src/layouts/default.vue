@@ -30,7 +30,7 @@
               </div>
               <div class="mt-5 h-0 flex-1 overflow-y-auto">
                 <nav class="space-y-1 px-2">
-                  <a v-for="item in navigation" :key="item.name" :href="item.href"
+                  <a v-for="item in navigation" :key="item.name" :href="item.href" v-if="item.visible"
                     :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group rounded-md py-2 px-2 flex items-center text-base font-medium']">
                     <component :is="item.icon"
                       :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-4 flex-shrink-0 h-6 w-6']"
@@ -57,14 +57,17 @@
             alt="Your Company" />
         </div>
         <div class="mt-5 flex flex-grow flex-col">
-          <nav class="flex-1 space-y-1 px-2 pb-4">
-            <RouterLink v-for="item in navigation" :key="item.name" :to="item.href"
-              :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group rounded-md py-2 px-2 flex items-center text-sm font-medium']">
-              <component :is="item.icon"
-                :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']"
-                aria-hidden="true" />
-              {{ item.name }}
-            </RouterLink>
+          <nav class="flex-1 space-y-1 px-2 pb-4" v-if="navigation">
+            <template v-for="item in navigation" :key="item.name">
+              <RouterLink :to="item.href" v-if="item.visible"
+                :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group rounded-md py-2 px-2 flex items-center text-sm font-medium']">
+                <component :is="item.icon"
+                  :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']"
+                  aria-hidden="true" />
+                {{ item.name }}
+              </RouterLink>
+            </template>
+
           </nav>
         </div>
       </div>
@@ -100,7 +103,7 @@
                   <MenuButton
                     class="flex px-2 py-1 max-w-xs items-center rounded-md text-sm bg-green-500 text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                     <span class="sr-only">Open user menu</span>
-                    {{hospitalStore.activeHospital.name}}
+                    {{ hospitalStore.activeHospital.name }}
                   </MenuButton>
                 </div>
                 <transition enter-active-class="transition ease-out duration-100"
@@ -111,7 +114,8 @@
                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <MenuItem v-for="hospital in hospitalStore.hospitals" :key="hospital.name" v-slot="{ active }">
                     <a @click="changeHospital(hospital)"
-                      :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']">{{ hospital.name }}</a>
+                      :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']">{{ hospital.name
+                      }}</a>
                     </MenuItem>
                   </MenuItems>
                 </transition>
@@ -134,9 +138,13 @@
                   leave-to-class="transform opacity-0 scale-95">
                   <MenuItems
                     class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                    <a :href="item.href"
-                      :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']">{{ item.name }}</a>
+                    <MenuItem>
+                    <a v-if="authStore.user" href="/profile" class="block py-2 px-4 text-sm text-gray-700">Profile({{
+                      authStore.user.name
+                    }})</a>
+                    </MenuItem>
+                    <MenuItem>
+                    <button @click="logout" class="block py-2 px-4 text-sm text-gray-700">Sign out</button>
                     </MenuItem>
                   </MenuItems>
                 </transition>
@@ -180,10 +188,15 @@ import {
   BuildingOfficeIcon
 } from '@heroicons/vue/24/outline'
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useHospitalStore } from '../store/hospital';
+import { useAuthStore } from '../store/auth';
+
+const authStore = useAuthStore()
 
 const route = useRoute();
+
+const router = useRouter();
 
 const currentRoute = ref('/dashboard');
 
@@ -199,43 +212,51 @@ watch(
 )
 
 const navigation = reactive([
-  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: computed(() => checkPath('/dashboard')) },
-  { name: 'Hospitals', href: '/hospitals', icon: BuildingOfficeIcon, current: computed(() => checkPath('/hospitals')) },
-  { name: 'Partners', href: '/partners', icon: CheckBadgeIcon, current: computed(() => checkPath('/partners')) },
-  { name: 'Staffs', href: '/staffs', icon: UsersIcon, current: computed(() => checkPath('/staffs')) },
-  { name: 'Departments', href: '/departments', icon: SquaresPlusIcon, current: computed(() => checkPath('/departments')) },
-  { name: 'Templates', href: '/templates', icon: FolderIcon, current: computed(() => checkPath('/templates')) },
-  { name: 'Patients', href: '/patients', icon: UserGroupIcon, current: computed(() => checkPath('/patients')) },
-  { name: 'Reports', href: '/reports', icon: ChartBarIcon, current: computed(() => checkPath('/reports')) },
+  { name: 'Dashboard', visible: computed(() => checkAdmin()), href: '/dashboard', icon: HomeIcon, current: computed(() => checkPath('/dashboard')) },
+  { name: 'Hospitals', visible: computed(() => checkAdmin()), href: '/hospitals', icon: BuildingOfficeIcon, current: computed(() => checkPath('/hospitals')) },
+  { name: 'Partners', visible: computed(() => checkAdmin()), href: '/partners', icon: CheckBadgeIcon, current: computed(() => checkPath('/partners')) },
+  { name: 'Staffs', visible: computed(() => checkAdmin()), href: '/staffs', icon: UsersIcon, current: computed(() => checkPath('/staffs')) },
+  { name: 'Departments', visible: computed(() => checkAdmin()), href: '/departments', icon: SquaresPlusIcon, current: computed(() => checkPath('/departments')) },
+  { name: 'Templates', visible: true, href: '/templates', icon: FolderIcon, current: computed(() => checkPath('/templates')) },
+  { name: 'Patients', visible: true, href: '/patients', icon: UserGroupIcon, current: computed(() => checkPath('/patients')) },
+  { name: 'Reports', visible: true, href: '/reports', icon: ChartBarIcon, current: computed(() => checkPath('/reports')) },
 ])
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
 ]
 
 const sidebarOpen = ref(false);
 
 const hospitalStore = useHospitalStore();
 
-
 onMounted(async () => {
   currentRoute.value = route.path;
   await hospitalStore.getHospitals();
-  await hospitalStore.changeHospital(hospitalStore.hospitals[0]);
+  if (!JSON.parse(localStorage.getItem("ACTIVE_HOSPITAL"))) {
+    await hospitalStore.changeHospital(hospitalStore.hospitals[0]);
+  }
+  await authStore.getProfile()
 })
 
-const changeHospital = (payload)=> {
-  if(payload.name !== hospitalStore.activeHospital.name) {
+const changeHospital = (payload) => {
+  if (payload.name !== hospitalStore.activeHospital.name) {
     const result = window.confirm(`All the details will be loaded for ${payload.name}. Are you sure you want to change Hospital?`)
     if (result) {
       hospitalStore.changeHospital(payload);
+      location.reload()
     } else {
       return
     }
   }
-  
-  
 }
 
+const logout = async () => {
+  const res = await authStore.logout();
+  router.push('/login')
+}
+
+const checkAdmin = () => {
+  return authStore.user && authStore.user.role === 'admin' ? true : false;
+}
 </script>
