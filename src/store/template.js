@@ -53,6 +53,21 @@ export const useTemplateStore = defineStore('template', () => {
         })
     }
 
+    const deleteTemplate = async(payload) => {
+        loading.value = true;
+        return await axiosClient.delete('/templates/' + payload).then((response) => {
+            loading.value = false;
+            return response
+        }).catch(err => {
+            loading.value = false;
+            const response = err.response;
+            if(response && response.status ===422 ) {
+                errors.value = response.data.errors;
+            }
+        })
+    }
 
-    return { templates, template, loading, errors, getTemplates, getTemplate, createTemplate}
+
+
+    return { templates, template, loading, errors, getTemplates, getTemplate, createTemplate, deleteTemplate}
 })
