@@ -3,8 +3,6 @@
         <div class="sm:flex sm:items-center">
             <div class="sm:flex-auto">
                 <h1 class="text-2xl font-semibold text-gray-900">{{props.title}}</h1>
-                <p class="mt-2 text-sm text-gray-700">A list of all the users in your account including their name,
-                    title, email and role.</p>
             </div>
             <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
                 <RouterLink :to="props.url"

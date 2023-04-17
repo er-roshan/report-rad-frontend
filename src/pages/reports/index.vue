@@ -1,6 +1,12 @@
 <template>
     <div class="py-6">
-        <MainHeader title="Reports" url="/reports/create" />
+        <div class="px-4 sm:px-6 md:px-0">
+            <div class="sm:flex sm:items-center">
+                <div class="sm:flex-auto">
+                    <h1 class="text-2xl font-semibold text-gray-900">Reports</h1>
+                </div>
+            </div>
+        </div>
         <div class="px-4 sm:px-6 md:px-0">
             <!-- Replace with your content -->
             <div class="flex mt-4">
