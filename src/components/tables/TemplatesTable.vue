@@ -33,7 +33,7 @@
                                     </td>
                                     <td
                                         class="relative whitespace-nowrap flex items-center justify-end gap-x-2 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                        <a href="#" class="text-red-600 hover:text-red-700"><TrashIcon class="w-5" /><span
+                                        <a @click="deleteTemplate(template)" class="text-red-600 hover:text-red-700 cursor-pointer"><TrashIcon class="w-5" /><span
                                                 class="sr-only">, {{
                                                     template.name
                                                 }}</span></a>
@@ -41,11 +41,7 @@
                                                 class="sr-only">, {{
                                                     template.name
                                                 }}</span></RouterLink>
-                                        <a href="#" class="text-green-600 hover:text-green-700 flex items-center"> <EyeIcon class="w-5" /><span
-                                                class="sr-only">, {{
-                                                    template.name
-                                                }}</span></a>
-                                        <a href="#" class="text-gray-600 hover:text-gray-700 flex items-center"> <DocumentDuplicateIcon class="w-5" /><span
+                                        <a @click="duplicateTempalte(template)" class="text-gray-600 hover:text-gray-700 flex items-center cursor-pointer"> <DocumentDuplicateIcon class="w-5" /><span
                                                 class="sr-only">, {{
                                                     template.name
                                                 }}</span></a>
@@ -63,7 +59,8 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useTemplateStore } from '../../store/template';
-import { EyeIcon, PencilSquareIcon, TrashIcon,DocumentDuplicateIcon } from "@heroicons/vue/24/outline"
+import { PencilSquareIcon, TrashIcon,DocumentDuplicateIcon } from "@heroicons/vue/24/outline"
+import { notify } from '@kyvg/vue3-notification';
 
 
 const templateStore = useTemplateStore();
@@ -71,4 +68,35 @@ const templateStore = useTemplateStore();
 onMounted(() => {
     templateStore.getTemplates();
 })
+
+const duplicateTempalte = async (value) => {
+    const result = window.confirm(`Are you sure you want to duplicate ${value.name}`)
+    if (result) {
+        const res = await templateStore.createTemplate({...value, name: value.name + ' Copy#' + Math.floor(Math.random() * 1000000) });
+        if (res.status === 201) {
+            notify({
+                title: "Duplicate",
+                text: "Template Duplicated successfully",
+                type: 'info'
+            })
+            templateStore.getTemplates()
+        }
+    }
+}
+
+const deleteTemplate = async (value) => {
+    const result = window.confirm(`Are you sure you want to delete ${value.name}?`)
+    if (result) {
+        const res = await templateStore.deleteTemplate(value.id);
+        if (res.status === 204) {
+            notify({
+                title: "Deleted",
+                text: "Template Deleted successfully",
+                type: 'success'
+            })
+            templateStore.getTemplates()
+        }
+    }
+}
+
 </script>

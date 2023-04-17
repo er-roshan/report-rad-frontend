@@ -35,26 +35,37 @@
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ entry.assignee.name }}</td>
                                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                    <span :class="[ 'capitalize inline-flex rounded-full  px-2 text-xs font-medium leading-5 ', entry.status ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' ]">{{ entry.status ? 'Report Created' :'Need Attention' }}</span>
+                                    <span
+                                        :class="['capitalize inline-flex rounded-full  px-2 text-xs font-medium leading-5 ', entry.status ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800']">{{
+                                            entry.status ? 'Report Created' : 'Need Attention' }}</span>
 
                                 </td>
                                 <td
-                                    class="relative whitespace-nowrap flex items-center justify-end gap-x-2 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                    <a title="Delete" href="#" class="text-red-600 hover:text-red-700">
-                                        <TrashIcon class="w-5" /><span class="sr-only">, {{
-                                            entry.id
-                                        }}</span>
-                                    </a>
-                                    <a title="Edit" href="#" class="text-indigo-600 hover:text-indigo-700">
-                                        <PencilSquareIcon class="w-5" /><span class="sr-only">, {{
-                                            entry.id
-                                        }}</span>
-                                    </a>
-                                    <RouterLink :to="'/reports/create/' + entry.id" title="Add Report" href="#" class="text-green-600 hover:text-green-700 flex items-center">
-                                        <DocumentPlusIcon class="w-5" /><span class="sr-only">, {{
-                                            entry.id
-                                        }}</span>
-                                    </RouterLink>
+                                    class="relative whitespace-nowrap pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                    <template v-if="!entry.status">
+                                        <div class="flex items-center justify-end gap-x-2 text-right">
+                                            <a title="Delete" href="#" class="text-red-600 hover:text-red-700">
+                                                <TrashIcon class="w-5" /><span class="sr-only">, {{
+                                                    entry.id
+                                                }}</span>
+                                            </a>
+                                            <a title="Edit" href="#"
+                                                class="text-indigo-600 hover:text-indigo-700">
+                                                <PencilSquareIcon class="w-5" /><span class="sr-only">, {{
+                                                    entry.id
+                                                }}</span>
+                                            </a>
+                                            <RouterLink :to="'/reports/create/' + entry.id"
+                                                title="Add Report" href="#"
+                                                class="text-green-600 hover:text-green-700 flex items-center">
+                                                <DocumentPlusIcon class="w-5" /><span class="sr-only">, {{
+                                                    entry.id
+                                                }}</span>
+                                            </RouterLink>
+
+                                        </div>
+                                    </template>
+
                                 </td>
                             </tr>
                         </tbody>
