@@ -25,8 +25,9 @@
                 </div>
               </TransitionChild>
               <div class="flex flex-shrink-0 items-center px-4">
-                <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt="Your Company" />
+                <!-- <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                  alt="Your Company" /> -->
+                <h1>Report Rad</h1>
               </div>
               <div class="mt-5 h-0 flex-1 overflow-y-auto">
                 <nav class="space-y-1 px-2">
@@ -51,10 +52,17 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
       <!-- Sidebar component, swap this element with another sidebar if you like -->
-      <div class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white pt-5">
-        <div class="flex flex-shrink-0 items-center px-4">
-          <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company" />
+      <div class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white">
+        <div class="flex flex-shrink-0 items-center">
+          <!-- <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+            alt="Your Company" /> -->
+          <div class="flex items-center justify-center py-4 bg-gradient-to-r from-sky-50 to-sky-500 w-full text-center">
+            <img class="w-8" src="https://dreamifyitsolution.com.au/wp-content/uploads/2023/07/cropped-dreamify-favicon-1-180x180.png"
+              alt="">
+            <h1 class="text-xl font-serif uppercase text-white font-bold ml-2">
+              <span class="font-medium">R</span>eport Rad
+            </h1>
+          </div>
         </div>
         <div class="mt-5 flex flex-grow flex-col">
           <nav class="flex-1 space-y-1 px-2 pb-4" v-if="navigation">
@@ -212,14 +220,12 @@ watch(
 )
 
 const navigation = reactive([
-  { name: 'Dashboard', visible: computed(() => checkAdmin()), href: '/dashboard', icon: HomeIcon, current: computed(() => checkPath('/dashboard')) },
+  { name: 'Reports', visible: true, href: '/reports', icon: ChartBarIcon, current: computed(() => checkPath('/reports')) },
+  // { name: 'Dashboard', visible: computed(() => checkAdmin()), href: '/dashboard', icon: HomeIcon, current: computed(() => checkPath('/dashboard')) },
   { name: 'Hospitals', visible: computed(() => checkAdmin()), href: '/hospitals', icon: BuildingOfficeIcon, current: computed(() => checkPath('/hospitals')) },
   { name: 'Partners', visible: computed(() => checkAdmin()), href: '/partners', icon: CheckBadgeIcon, current: computed(() => checkPath('/partners')) },
   { name: 'Staffs', visible: computed(() => checkAdmin()), href: '/staffs', icon: UsersIcon, current: computed(() => checkPath('/staffs')) },
-  { name: 'Departments', visible: computed(() => checkAdmin()), href: '/departments', icon: SquaresPlusIcon, current: computed(() => checkPath('/departments')) },
-  { name: 'Templates', visible: true, href: '/templates', icon: FolderIcon, current: computed(() => checkPath('/templates')) },
-  { name: 'Patients', visible: true, href: '/patients', icon: UserGroupIcon, current: computed(() => checkPath('/patients')) },
-  { name: 'Reports', visible: true, href: '/reports', icon: ChartBarIcon, current: computed(() => checkPath('/reports')) },
+  { name: 'Management Hub', visible: true, href: '/templates', icon: FolderIcon, current: computed(() => checkPath('/templates')) },
 ])
 const userNavigation = [
   { name: 'Your Profile', href: '#' },

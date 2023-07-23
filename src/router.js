@@ -1,11 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useAuthStore } from './store/auth'
+import { useAuthStore } from './store/auth.js'
 
 const authGuard = (to, from, next) => {
     const authStore = useAuthStore()
+    console.log("i was called after login")
     if(to.meta.requiresAuth && authStore.token === null) {
+        console.log("Hey if")
         next({name: 'login'})
     } else {
+        console.log("hey else")
         next()
     }
 }
@@ -13,8 +16,8 @@ const authGuard = (to, from, next) => {
 const routes = [
     {
         path: '/',
-        redirect: '/dashboard',
-        name: 'Dashboard',
+        redirect: '/reports',
+        name: 'reports',
         component: ()=> import('./layouts/default.vue'),
         meta: {requiresAuth: true},
         beforeEnter: authGuard,
