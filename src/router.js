@@ -90,6 +90,10 @@ const routes = [
                 path: '/hospitals/edit/:id',
                 component: ()=> import('./pages/hospitals/index.vue')
             },
+            {
+                path: '/profile',
+                component: ()=> import('./pages/profile.vue')
+            },
             
         ]
     },

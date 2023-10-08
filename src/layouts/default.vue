@@ -50,14 +50,16 @@
     </TransitionRoot>
 
     <!-- Static sidebar for desktop -->
-    <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
+    <div class="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col bg-gradient-to-r from-sky-300 to-sky-500">
       <!-- Sidebar component, swap this element with another sidebar if you like -->
-      <div class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-white">
+      <div
+        class="flex flex-grow flex-col overflow-y-auto border-r border-gray-200 bg-gradient-to-r from-sky-300 to-sky-500">
         <div class="flex flex-shrink-0 items-center">
           <!-- <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt="Your Company" /> -->
-          <div class="flex items-center justify-center py-4 bg-gradient-to-r from-sky-50 to-sky-500 w-full text-center">
-            <img class="w-8" src="https://dreamifyitsolution.com.au/wp-content/uploads/2023/07/cropped-dreamify-favicon-1-180x180.png"
+          <div class="flex items-center justify-center py-4 w-full text-center border-b border-white">
+            <img class="w-8"
+              src="https://dreamifyitsolution.com.au/wp-content/uploads/2023/07/cropped-dreamify-favicon-1-180x180.png"
               alt="">
             <h1 class="text-xl font-serif uppercase text-white font-bold ml-2">
               <span class="font-medium">R</span>eport Rad
@@ -68,9 +70,9 @@
           <nav class="flex-1 space-y-1 px-2 pb-4" v-if="navigation">
             <template v-for="item in navigation" :key="item.name">
               <RouterLink :to="item.href" v-if="item.visible"
-                :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'group rounded-md py-2 px-2 flex items-center text-sm font-medium']">
+                :class="[item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-100 hover:bg-gray-50 hover:text-gray-900', 'group rounded-md py-2 px-2 flex items-center text-sm font-medium']">
                 <component :is="item.icon"
-                  :class="[item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']"
+                  :class="[item.current ? 'text-gray-500' : 'text-gray-100 group-hover:text-gray-500', 'mr-3 flex-shrink-0 h-6 w-6']"
                   aria-hidden="true" />
                 {{ item.name }}
               </RouterLink>
@@ -109,7 +111,7 @@
               <Menu as="div" class="relative ml-3" v-if="hospitalStore.activeHospital">
                 <div>
                   <MenuButton
-                    class="flex px-2 py-1 max-w-xs items-center rounded-md text-sm bg-green-500 text-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                    class="flex px-2 py-1 max-w-xs items-center rounded-md text-sm bg-gradient-to-r from-sky-300 to-sky-500 text-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
                     <span class="sr-only">Open user menu</span>
                     {{ hospitalStore.activeHospital.name }}
                   </MenuButton>
@@ -237,10 +239,12 @@ const sidebarOpen = ref(false);
 const hospitalStore = useHospitalStore();
 
 onMounted(async () => {
+  const storedActiveHospital = localStorage.getItem("ACTIVE_HOSPITAL");
+  console.log("Checking", localStorage.getItem("ACTIVE_HOSPITAL") == undefined)
   currentRoute.value = route.path;
   await hospitalStore.getHospitals();
-  if (!JSON.parse(localStorage.getItem("ACTIVE_HOSPITAL"))) {
-    await hospitalStore.changeHospital(hospitalStore.hospitals[0]);
+  if (storedActiveHospital == null || storedActiveHospital == "undefined") {
+    hospitalStore.changeHospital(hospitalStore.hospitals[0])
   }
   await authStore.getProfile()
 })

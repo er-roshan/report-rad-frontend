@@ -1,9 +1,10 @@
 <template>
-  <form class="space-y-8 divide-y divide-gray-200" @submit.prevent="onSubmit">
+  <form class="space-y-8 divide-y divide-gray-200">
     <div class="space-y-8 divide-y divide-gray-200">
       <div>
         <div class="flex justify-between">
-          <h2 class="text-2xl font-medium leading-6 text-gray-900">Create Patients for <span class="text-green-500">{{ hospitalStore.activeHospital.name }}</span> </h2>
+          <h2 class="text-2xl font-medium leading-6 text-gray-900">Create Patients for <span class="text-green-500">{{
+            hospitalStore.activeHospital.name }}</span> </h2>
           <button @click.prevent="emits('close')" class="global-btn danger-btn">Cancel</button>
         </div>
         <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -49,19 +50,19 @@
                 <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-2">
                   <div class="flex items-center">
                     <input value="years" v-model="data.age.age_unit" id="years" name="age-method" type="radio" checked
-                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      class="h-4 w-4 border-gray-300 text-teal-400 focus:ring-teal-500">
                     <label for="years" class="ml-3 block text-sm font-medium text-gray-700">Years</label>
                   </div>
 
                   <div class="flex items-center">
                     <input value="months" v-model="data.age.age_unit" id="months" name="age-method" type="radio"
-                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      class="h-4 w-4 border-gray-300 text-teal-400 focus:ring-teal-500">
                     <label for="months" class="ml-3 block text-sm font-medium text-gray-700">Months</label>
                   </div>
 
                   <div class="flex items-center">
                     <input value="days" v-model="data.age.age_unit" id="days" name="age-method" type="radio"
-                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      class="h-4 w-4 border-gray-300 text-teal-400 focus:ring-teal-500">
                     <label for="days" class="ml-3 block text-sm font-medium text-gray-700">Days</label>
                   </div>
                 </div>
@@ -77,19 +78,19 @@
                 <div class="space-y-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
                   <div class="flex items-center">
                     <input value="male" v-model="data.gender" id="male" name="gender-method" type="radio" checked
-                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      class="h-4 w-4 border-gray-300 text-teal-400 focus:ring-teal-500">
                     <label for="male" class="ml-3 block text-sm font-medium text-gray-700">Male</label>
                   </div>
 
                   <div class="flex items-center">
                     <input value="female" v-model="data.gender" id="female" name="gender-method" type="radio"
-                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      class="h-4 w-4 border-gray-300 text-teal-400 focus:ring-teal-500">
                     <label for="female" class="ml-3 block text-sm font-medium text-gray-700">Female</label>
                   </div>
 
                   <div class="flex items-center">
                     <input value="others" v-model="data.gender" id="others" name="gender-method" type="radio"
-                      class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                      class="h-4 w-4 border-gray-300 text-teal-400 focus:ring-teal-500">
                     <label for="others" class="ml-3 block text-sm font-medium text-gray-700">Others</label>
                   </div>
                 </div>
@@ -111,11 +112,11 @@
     <div class="pt-5">
       <div class="flex justify-end">
         <button @click.prevent="emits('close')"
-          class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          class="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
           Cancel</button>
         <button @click.prevent="onlyCreate"
-          class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
-        <button type="submit"
+          class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-teal-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-teal-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">Save</button>
+        <button @click.prevent="createRequest"
           class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">Save
           & Request</button>
 
@@ -130,12 +131,12 @@ import { reactive } from 'vue';
 import { usePatientStore } from '../../store/patient';
 import { useHospitalStore } from '../../store/hospital';
 
-const emits = defineEmits(['close', 'success', 'patientCreated']);
+const emits = defineEmits(['close', 'createRequestNow', 'patientCreated']);
 
 const patientStore = usePatientStore()
 const hospitalStore = useHospitalStore()
 
-let data = reactive({
+const data = reactive({
   name: '',
   email: '',
   age: {
@@ -148,34 +149,32 @@ let data = reactive({
   phone: '',
 })
 
-const onSubmit = async () => {
+const createRequest = async () => {
   const response = await patientStore.createPatient({ ...data, age: JSON.stringify(data.age), hospital_id: hospitalStore.activeHospital.id });
   if (response.status === 201) {
-    resetData()
-    emits('success', response.data)
+    console.log("I reached insdide reset data function call")
+    await resetData()
+    await emits('createRequestNow')
   }
 }
 
 const onlyCreate = async () => {
   const response = await patientStore.createPatient({ ...data, age: JSON.stringify(data.age), hospital_id: hospitalStore.activeHospital.id });
   if (response.status === 201) {
-    resetData()
-    emits('patientCreated')
+    await resetData()
+    await emits('patientCreated')
   }
 }
 
 const resetData = () => {
-  data = {
-    name: '',
-    email: '',
-    age: {
-      age_value: '',
-      age_unit: 'years',
-    },
-    gender: 'male',
-    address: '',
-    refer_by: '',
-    phone: '',
-  }
+  data.name = '';
+  data.email = '';
+  data.age.age_value = '';
+  data.age.age_unit = 'years';
+  data.gender = 'male';
+  data.address = '';
+  data.refer_by = '';
+  data.phone = '';
+
 }
 </script>

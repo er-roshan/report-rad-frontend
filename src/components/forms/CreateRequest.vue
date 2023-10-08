@@ -10,8 +10,8 @@
                     <div class="sm:col-span-3">
                         <label for="full-name" class="report-label">Patient name <span class="text-red-600">*</span></label>
                         <div class="mt-1">
-                            <input v-model="patientData.name" type="text" name="full-name" id="full-name" autocomplete="given-name"
-                                class="report-input" disabled />
+                            <input v-model="patientData.name" type="text" name="full-name" id="full-name"
+                                autocomplete="given-name" class="report-input" disabled />
                         </div>
                     </div>
 
@@ -39,9 +39,12 @@
                         <label for="status" class="report-label">Template</label>
                         <div class="mt-1">
                             <select v-model="data.template_id" id="status" name="status" autocomplete="status"
-                                class="report-input">
-                                <option v-for="template in templateStore.templates" :value="template.id">
-                                    {{ template.name }}</option>
+                                class="report-input" :disabled="!data.department_id">
+                                <template v-for="template in templateStore.templates">
+                                    <option :value="template.id" v-if="template.department_id == data.department_id">
+                                        {{ template.name }}</option>
+                                </template>
+
                             </select>
                         </div>
                     </div>
@@ -94,7 +97,7 @@ const data = reactive({
 const onSubmit = async () => {
     data.patient_id = props.patientData.id;
     const res = await entryStore.createEntry({ ...data, hospital_id: hospitalStore.activeHospital.id });
-    if(res.status === 201) {
+    if (res.status === 201) {
         emits('entrySuccess')
     }
 }

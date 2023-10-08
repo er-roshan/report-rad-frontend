@@ -13,9 +13,9 @@
             </div>
         </div>
         <FormPopup :isOpen="isOpen" @close="close" :boxSize="'large'">
-            <CreatePatient @close="close" @success="success" @patientCreated="patientCreated"
+            <CreatePatient @close="close" @createRequestNow="createRequestNow" @patientCreated="patientCreated"
                 v-if="visibleForm === 'patient'" />
-            <CreateRequest @close="close" @entrySuccess="entrySuccess" :patientData="patientData" v-else />
+            <CreateRequest @close="close" @entrySuccess="entrySuccess" :patientData="patientData" v-if="visibleForm === 'request'" />
         </FormPopup>
         <div class="px-4 sm:px-6 md:px-0">
             <!-- Replace with your content -->
@@ -30,7 +30,6 @@
 <script setup>
 import { ref } from 'vue';
 import FormPopup from '../../components/global/FormPopup.vue';
-import MainHeader from '../../components/shared/MainHeader.vue';
 import PatientsTable from '../../components/tables/PatientsTable.vue';
 import CreatePatient from '../../components/forms/CreatePatient.vue';
 import CreateRequest from '../../components/forms/CreateRequest.vue';
@@ -38,9 +37,7 @@ import { usePatientStore } from '../../store/patient';
 import { notify } from '@kyvg/vue3-notification';
 
 const isOpen = ref(false);
-
 const visibleForm = ref('patient');
-
 const patientData = ref(null)
 
 const patientStore = usePatientStore()
@@ -49,9 +46,13 @@ const close = () => {
     isOpen.value = false
 }
 
-const success = (payload) => {
+const createRequestNow = () => {
+    console.log("I was called as success")
+    //console.log(payload)
+    isOpen.value = false;
     visibleForm.value = 'request';
-    patientData.value = payload;
+    //isOpen.value = true
+    //patientData.value = payload;
 }
 
 const patientCreated = () => {

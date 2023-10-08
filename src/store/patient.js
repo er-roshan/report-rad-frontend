@@ -43,6 +43,7 @@ export const usePatientStore = defineStore('patient', ()=> {
     const createPatient = async(payload)=> {
         loading.value = true;
         return await axiosClient.post('/patients', payload).then((response) => {
+            console.log("Patient Created: ", response)
             loading.value = false;
             return response;
             //router.push('/patients')

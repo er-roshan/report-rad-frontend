@@ -36,6 +36,28 @@
                                         placeholder="Enter your partner email" />
                                 </div>
                             </div>
+                            <div class="sm:col-span-6">
+                                <label for="role" class="report-label">Role <span class="text-red-600">*</span></label>
+                                <div class="mt-1 ">
+                                    <select v-model="form_data.role" id="role" name="role" class="report-input">
+                                        <option selected disabled>Select Role</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="staff">Staff</option>
+                                        <option value="manager">Manager</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="sm:col-span-6">
+                                <label for="role" class="report-label">Assign Hospital <span class="text-gray-400 text-xs">(Optional)</span></label>
+                                <div class="mt-1 ">
+                                    <select v-model="form_data.hospital_id" id="role" name="role" class="report-input">
+                                        <option selected disabled>Select Hospital</option>
+                                        <option v-for="hospital in hospitalStore.hospitals"
+                                            :key="'hospital-item-' + hospital.id" :value="hospital.id">{{ hospital.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,15 +87,23 @@ import FormPopup from '../components/global/FormPopup.vue'
 import { ref, reactive, onMounted } from 'vue';
 import { usePartnerStore } from '../store/partner';
 import PartnersTable from '../components/tables/PartnersTable.vue';
+import { useHospitalStore } from '../store/hospital';
 import { notify } from '@kyvg/vue3-notification';
 
 const partnerStore = usePartnerStore()
+const hospitalStore = useHospitalStore();
+
+onMounted(() => {
+    hospitalStore.getHospitals();
+})
 
 const isOpen = ref(false)
 
 const form_data = reactive({
     name: '',
     email: '',
+    role: '',
+    hospital_id: ''
 })
 
 const close = () => {

@@ -9,7 +9,8 @@
                     <p class="mt-2 text-sm text-gray-600">
                         Or
                         {{ ' ' }}
-                        <RouterLink to="/register" href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Create new Account</RouterLink>
+                        <RouterLink to="/register" href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Create
+                            new Account</RouterLink>
                     </p>
                 </div>
 
@@ -19,20 +20,25 @@
                             <div>
                                 <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
                                 <div class="mt-1">
-                                    <input v-model="data.email" id="email" name="email" type="email" autocomplete="email" required=""
+                                    <input v-model="data.email" id="email" name="email" type="email" autocomplete="email"
+                                        required=""
                                         class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" />
                                 </div>
-                                <div class="text-red-600 italic text-sm" v-if="authStore.loginErrors && authStore.loginErrors['email']">*{{ authStore.loginErrors['email'][0] }}</div>
+                                <div class="text-red-600 italic text-sm"
+                                    v-if="authStore.loginErrors && authStore.loginErrors['email']">*{{
+                                        authStore.loginErrors['email'][0] }}</div>
                             </div>
 
                             <div class="space-y-1">
                                 <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                                 <div class="mt-1">
-                                    <input v-model="data.password" id="password" name="password" type="password" autocomplete="current-password"
-                                        required=""
+                                    <input v-model="data.password" id="password" name="password" type="password"
+                                        autocomplete="current-password" required=""
                                         class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" />
                                 </div>
-                                <div class="text-red-600 italic text-sm" v-if="authStore.loginErrors && authStore.loginErrors['password']">*{{ authStore.loginErrors['password'][0] }}</div>
+                                <div class="text-red-600 italic text-sm"
+                                    v-if="authStore.loginErrors && authStore.loginErrors['password']">*{{
+                                        authStore.loginErrors['password'][0] }}</div>
                             </div>
 
                             <div class="flex items-center justify-end">
@@ -75,8 +81,12 @@ const data = reactive({
 const router = useRouter()
 const onSubmit = async () => {
     const res = await authStore.login(data);
-    console.log('i reached here login after ')
-    router.push({ name: 'dashboard'})
+    if (res) {
+        console.log(res)
+        console.log('i reached here login after ')
+        router.push('/dashboard')
+    }
+
 }
 
 onMounted(() => {

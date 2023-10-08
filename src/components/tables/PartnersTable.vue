@@ -13,6 +13,10 @@
                                     </th>
                                     <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                         Email</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        Role</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                        Hospital</th>
                                     <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                         <span class="sr-only">Actions</span>
                                     </th>
@@ -31,6 +35,14 @@
                                     <td class="whitespace-nowrap py-4 px-3 text-sm text-left font-medium text-gray-900">
                                         {{
                                             partner.email
+                                        }}</td>
+                                    <td class="whitespace-nowrap py-4 px-3 text-sm text-left font-medium text-gray-900">
+                                        {{
+                                            partner.role
+                                        }}</td>
+                                    <td class="whitespace-nowrap py-4 px-3 text-sm text-left font-medium text-gray-900">
+                                        {{
+                                            partner.hospital_id
                                         }}</td>
                                     <td
                                         class="relative whitespace-nowrap flex items-center justify-end gap-x-2 py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">

@@ -15,17 +15,23 @@
         <div class="px-4 sm:px-6 md:px-0">
             <!-- Replace with your content -->
             <div class="flex mt-4 gap-x-4">
-                <button :class="'global-btn ' + [activeComponent === 'PatientList' ? 'primary-btn' : '']"
+                <button :class="'global-btn ' + [activeQueryParam === 'PatientList' ? 'primary-btn' : '']"
                     @click="switchComponent('PatientList')">Patient List</button>
-                <button :class="'global-btn ' + [activeComponent === 'ReportRequestTable' ? 'primary-btn' : '']"
+                <button :class="'global-btn ' + [activeQueryParam === 'ReportRequestTable' ? 'primary-btn' : '']"
                     @click="switchComponent('ReportRequestTable')">Report Request</button>
-                <button :class="'global-btn ' + [activeComponent === 'ReportListTable' ? 'primary-btn' : '']"
+                <button :class="'global-btn ' + [activeQueryParam === 'ReportListTable' ? 'primary-btn' : '']"
                     @click="switchComponent('ReportListTable')">Report List</button>
             </div>
             <div class="py-4">
-                <PatientList v-if="activeComponent === 'PatientList'" />
-                <ReportRequestTable v-else-if="activeComponent === 'ReportRequestTable'" />
-                <ReportListTable v-else />
+                <template v-if="activeQueryParam === 'PatientList'">
+                    <PatientList />
+                </template>
+                <template v-if="activeQueryParam === 'ReportRequestTable'">
+                    <ReportRequestTable />
+                </template>
+                <template v-if="activeQueryParam === 'ReportListTable'">
+                    <ReportListTable />
+                </template>
             </div>
             <!-- /End replace -->
         </div>
@@ -36,21 +42,35 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import ReportListTable from '../../components/tables/ReportListTable.vue';
+import { ref, onMounted, computed } from 'vue';
 import ReportRequestTable from '../../components/tables/ReportRequestTable.vue'
 import PatientList from '../../components/shared/PatientList.vue';
 import FormPopup from '../../components/global/FormPopup.vue';
-import CreatePatient from '../../components/forms/CreatePatient.vue';
 import CreateRequest from '../../components/forms/CreateRequest.vue';
 import { usePatientStore } from '../../store/patient';
 import { notify } from '@kyvg/vue3-notification';
+import { useHospitalStore } from '../../store/hospital';
+import ReportListTable from '../../components/tables/ReportListTable.vue';
+import CreatePatient from '../../components/forms/CreatePatient.vue'
+import { useRoute, useRouter } from 'vue-router';
 
-const activeComponent = ref('PatientList');
-const dynamicComponent = ref(null)
+const router = useRouter()
+const route = useRoute();
+
+const hospitalStore = useHospitalStore()
+
+onMounted(() => {
+    hospitalStore.getHospitals();
+})
+
+const activeQueryParam = computed(() => {
+    return route.query.active || 'PatientList';
+});
+
+const activeComponent = ref(activeQueryParam.value ? activeQueryParam.value : 'PatientList');
 
 const switchComponent = (payload) => {
-    activeComponent.value = payload
+    router.push({ query: { active: payload } });
 }
 
 const isOpen = ref(false);
